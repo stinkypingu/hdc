@@ -44,10 +44,10 @@ def get_unique_chars(df):
     return unique
 
 # bundle together a molecule and add into a column of a dataframe
-def bundle_ngrams(df, ngram_dict, n):    
+def bundle_ngrams(df, ngram_dict, n, D):    
     def bundle_together(entry): 
         num_grams = len(entry) - n + 1
-        hdvs = np.zeros((num_grams, 1000))
+        hdvs = np.zeros((num_grams, D))
         for i in range(num_grams):
             ngram = entry[i : i + n]
             hdvs[i] = ngram_dict[ngram]

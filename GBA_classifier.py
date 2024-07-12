@@ -5,6 +5,8 @@ import HD_library as hd
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+DIM = 10000
+
 # read to dataframe
 df_actives = hd.read_to_df("GBA_actives.txt")
 df_inactives = hd.read_to_df("GBA_inactives.txt")
@@ -16,7 +18,7 @@ inactives_unique_chars = hd.get_unique_chars(df_inactives)
 unique_chars = actives_unique_chars | inactives_unique_chars
 
 # make dictionary to HDVs
-char_dict = {char: hd.HDV(1000) for char in unique_chars}
+char_dict = {char: hd.HDV(DIM) for char in unique_chars}
 print(f"unique character count: {len(char_dict)}")
 
 bigram_dict = hd.make_dict(char_dict, 3)
@@ -24,10 +26,10 @@ print(f"bigram count: {len(bigram_dict)}\n")
 
 
 # bundle together each entry
-hd.bundle_ngrams(df_actives, bigram_dict, 3)
+hd.bundle_ngrams(df_actives, bigram_dict, 3, DIM)
 #print(df_actives)
 
-hd.bundle_ngrams(df_inactives, bigram_dict, 3)
+hd.bundle_ngrams(df_inactives, bigram_dict, 3, DIM)
 #print(df_inactives)
 
 # bundle together random 80% of training data to create profiles
