@@ -13,7 +13,7 @@ np.random.seed(42)
 np.set_printoptions(threshold=np.inf, linewidth=1000, precision=5)
 
 
-HDV_DIM = 4000
+HDV_DIM = 2000
 MAX_FEATURES = 1024
 
 RADIUS = 2
@@ -35,10 +35,11 @@ neg_features = algo.get_features_matrix(neg_df, RADIUS, MAX_FEATURES)
 #projection_matrix = algo.get_random_matrix(MAX_FEATURES, HDV_DIM)
 #projection_matrix = np.load('saved/projection_matrix_MAPK1.npy')
 projection_matrix = np.zeros((MAX_FEATURES, HDV_DIM), dtype=int)
-for row in range(MAX_FEATURES):
-    col_indices = np.random.choice(HDV_DIM, int(HDV_DIM*0.05), replace=False) #10% dense
-    projection_matrix[row, col_indices] = 1
 
+for col in range(HDV_DIM): #per column
+    indices = np.random.choice(MAX_FEATURES, int(MAX_FEATURES*0.01), replace=False) #10% dense
+    projection_matrix[indices, col] = 1
+   
 
 # Check the result (optional)
 #build encodings of each molecule
